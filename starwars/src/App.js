@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import StarWarCard from "./components/StarWarsCard"
+import SearchBar from "./components/SearchBar"
 import styled from "styled-components"
 import './App.css';
 import axios from "axios"
@@ -21,13 +22,25 @@ const App = () => {
  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
  margin: 20px auto;
  max-width: 900px;
+`
+const HeadTitle = styled.h1`
+margin: 0 auto;
+text-align:center;
+padding-bottom: 50px;
+padding-top: 32px;
 
 `
+
+const CompCta = styled.div `
+margin: 0 auto;
+width:900px
+`
+
 useEffect(() => {
   axios
   .get("https://swapi.co/api/people/")
   .then(res => {
-    console.log(res.data.results)
+    // console.log(res.data.results)
     setStarWars(res.data.results)
    
   })
@@ -40,10 +53,10 @@ useEffect(() => {
 
 
   return (
-<div>
-    <h1 className="Header">React Wars</h1>
+<CompCta>
+    <HeadTitle className="Header">React Wars</HeadTitle>
+    <SearchBar></SearchBar>
     <Cta>
-   
       {starWars.map(sw => {
         return(
     
@@ -57,7 +70,8 @@ useEffect(() => {
       })}
 
 </Cta>
-    </div>
+
+    </CompCta>
 
   );
 }
