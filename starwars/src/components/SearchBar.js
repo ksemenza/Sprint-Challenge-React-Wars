@@ -1,54 +1,33 @@
-import React, {Component} from "react"
-import axios from "axios"
-// const { API_KEY} = data.results
-const API_URL = "https://swapi.co/api/people/"
+import React, {useState} from "react"
 
-class Search extends Component {
-    state = {
-        query: '',
-        result:[]
-    }
+const SearchBar = ({search}) => {
+    const[searchValue, setSearchValue] = useState(" ");
 
-    getInfo = () => {
-        axios.get(`${API_URL}`)
-        .then(({data}) => {
-        
-            this.setState({
-                result: data.data
-              
-            })
-            console.log(data.data.results)
-        })
-    }
+    const handleSearchInputChange = e =>{
+        setSearchValue(e.target.value);
+    };
 
+    const resetInputField = () => {
+        setSearchValue('');
+     };
 
-    handleInputChange = () => {
-        this.setState({
-            query: this.search.value
-        }, () => {
-            if(this.state.query && this.state.query.length > 1) {
-                if(this.state.query.length % 2 === 0) {
-                    this.getInfo()
-                }
-            } else if (!this.state.query) {
+     const callSearchFunc = e => {
+         e.preventDefault();
+         search(searchValue);
+         resetInputField();
+     };
 
-            }
-        })
-    }
-
-    render() {
-        return(
-            <form>
-                <input placeholder="Search..."
-                ref={input => this.search = input}
-                onChange={this.handleInputChange}
-                />
-            
-            </form>
-        )
-    }
+     return (
+         <form className="search">
+             <input
+             value={searchValue}
+             onChange={handleSearchInputChange}
+             type='text'
+             />
+             <input onClick={callSearchFunc} type="submit" value="SEARCH" />
+         </form>
+     )
 
 }
 
-
-export default Search
+export default SearchBar
