@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import StarWarCard from "./components/StarWarsCard"
 import SearchBar from "./components/SearchBar"
+import SearchReducer, { reducer, initialState } from "./components/SearchReducer"
 import styled from "styled-components"
 import './App.css';
 import axios from "axios"
@@ -10,7 +11,10 @@ import axios from "axios"
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
+
+
   const [starWars, setStarWars] = useState([]);
+  const [state, dispatch] = useReducer(reducer, initialState)
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
@@ -48,7 +52,40 @@ useEffect(() => {
     console.log ("starwar res.data", error)
   });
 },[]);
- useEffect(() => {}, []);
+
+ useEffect(() => {
+   axios.get()
+   .then(jsonRes => {
+     console.log(jsonRes)
+     dispatch({
+      type: "SEARCH_CHARACTERS_SUCCESS",
+      payload: jsonRes.data.Search
+     })
+   })
+   .catch(err => {
+     console.error(err); 
+   })
+ }, []);
+
+ const refreshPAge = () => {
+   window.location.reload();
+ };
+
+ const search = searchValue => {
+   dispatch({
+     type: "SEARCH_CHARACTERS_REQUEST"
+   });
+   axios('https://swapi.co/api/people/?search=r2')
+   .then( jsonRes => {
+     if(jsonRes.data.Response === "True") {
+       dispatch({
+         type:"SEARCH_CHARACTERS_FAILURE",
+         error: jsonRes.data.Error
+       })
+     }
+   })
+ }
+
 
 
 
