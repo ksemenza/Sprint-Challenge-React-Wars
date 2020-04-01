@@ -65,7 +65,7 @@ useEffect(() => {
    .catch(err => {
      console.error(err); 
    })
- }, []);
+ }, [dispatch]);
 
  /* const refreshPAge = () => {
    window.location.reload();
