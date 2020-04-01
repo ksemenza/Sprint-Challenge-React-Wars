@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import StarWarCard from "./components/StarWarsCard"
 import SearchBar from "./components/SearchBar"
-import SearchReducer, { reducer, initialState } from "./components/SearchReducer"
+import { reducer, initialState } from "./components/SearchReducer"
 import styled from "styled-components"
 import './App.css';
 import axios from "axios"
@@ -14,7 +14,7 @@ const App = () => {
 
 
   const [starWars, setStarWars] = useState([]);
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [ dispatch] = useReducer(reducer, initialState)
   // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
@@ -67,10 +67,11 @@ useEffect(() => {
    })
  }, []);
 
- const refreshPAge = () => {
+ /* const refreshPAge = () => {
    window.location.reload();
- };
-
+ }; */
+/*TODO Add search function */
+/*
  const search = searchValue => {
    dispatch({
      type: "SEARCH_CHARACTERS_REQUEST"
@@ -85,7 +86,7 @@ useEffect(() => {
      }
    })
  }
-
+*/
 
 
 
